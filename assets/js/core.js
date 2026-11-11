@@ -44,31 +44,36 @@ CALC.tex = function (t, display) {
   return '<code>' + CALC.esc(t) + '</code>';
 };
 
-function fmtText(chunk) {
-  return CALC.esc(chunk)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n/g, '<br>')
-    .replace(/\u0000/g, '$');
+// O negrito (**) pode envolver fórmulas, então o estado "aberto/fechado" atravessa os trechos.
+function fmtText(chunk, st) {
+  return chunk.split('**').map((part, k) => {
+    let pre = '';
+    if (k > 0) { st.bold = !st.bold; pre = st.bold ? '<strong>' : '</strong>'; }
+    return pre + CALC.esc(part).replace(/\n/g, '<br>').replace(/\u0000/g, '$');
+  }).join('');
 }
 
 CALC.inline = function (src) {
   const s = String(src == null ? '' : src).replace(/\\\$/g, '\u0000');
+  const st = { bold: false };
+  const fmtText_ = (c) => fmtText(c, st);
   let out = '', i = 0;
   while (i < s.length) {
     if (s[i] === '$') {
       const disp = s[i + 1] === '$';
       const open = disp ? 2 : 1;
       const end = s.indexOf(disp ? '$$' : '$', i + open);
-      if (end < 0) { out += fmtText(s.slice(i)); break; }
+      if (end < 0) { out += fmtText_(s.slice(i)); break; }
       const t = s.slice(i + open, end).replace(/\u0000/g, '\\$');
       out += disp ? '<div class="mathblock">' + CALC.tex(t, true) + '</div>' : CALC.tex(t, false);
       i = end + open;
     } else {
       const next = s.indexOf('$', i);
-      out += fmtText(next < 0 ? s.slice(i) : s.slice(i, next));
+      out += fmtText_(next < 0 ? s.slice(i) : s.slice(i, next));
       i = next < 0 ? s.length : next;
     }
   }
+  if (st.bold) out += '</strong>';
   return out;
 };
 

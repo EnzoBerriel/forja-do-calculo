@@ -426,3 +426,21 @@ body, .sidebar, .card, .main { transition: background-color .35s, color .35s, bo
   .embers, .burst { display: none !important; }
 }
 @media print { .embers, .burst, .toast { display: none !important; } }
+
+/* ---------- Modelos animados ---------- */
+.viz { margin: 26px 0; padding: 18px 18px 16px; }
+.viz-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+.viz-head h3 { margin: 0; font-size: 1.05rem; }
+.viz-stage { width: 100%; border: 2px solid var(--border); background: var(--code-bg); line-height: 0; }
+.viz-stage canvas { display: block; }
+.viz-read { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 4px; min-height: 34px; }
+.viz-read span { display: inline-flex; gap: 8px; align-items: baseline; padding: 3px 10px; border: 2px solid var(--border); background: var(--surface-2); }
+.viz-read em { font-style: normal; color: var(--muted); font-size: .85rem; }
+.viz-read b { font-family: VT323, monospace; font-size: 1.25rem; font-weight: 400; color: var(--gold-text); }
+.viz-ctrl { display: flex; gap: 10px; align-items: center; margin: 8px 0 10px; }
+.viz-slider { flex: 1; display: flex; gap: 10px; align-items: center; font-family: VT323, monospace; font-size: 1.1rem; color: var(--text-2); }
+.viz-slider input { flex: 1; accent-color: var(--red); min-width: 80px; }
+.viz-cap { font-size: .95rem; color: var(--text-2); border-top: 2px dashed var(--border); padding-top: 10px; }
+.viz-cap .p:last-child { margin-bottom: 0; }
+.viz-from { margin-top: 8px; }
+@media (max-width: 560px) { .viz { padding: 14px 10px; } .viz-ctrl { flex-wrap: wrap; } .viz-slider { order: 3; flex-basis: 100%; } }

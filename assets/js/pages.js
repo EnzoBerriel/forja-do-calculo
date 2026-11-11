@@ -146,7 +146,7 @@
 
     view.innerHTML = `<div class="wrap">
       <div class="crumb">Módulo ${mod.n} · ${esc(mod.title)} · Aula ${l.n}</div>
-      <div class="lesson-head"><div style="flex:1;min-width:0"><h1>${esc(l.title)}</h1>
+      <div class="lesson-head"><div style="flex:1 1 320px;min-width:0"><h1>${esc(l.title)}</h1>
         <div class="meta-row"><span class="badge">≈ ${l.min} min</span>${l.patterns.map((p) => `<span class="badge red" title="Padrão de questão das provas">${p}</span>`).join('')}
         <span class="pct" style="margin-left:6px">${CALC.pct(CALC.lessonProgress(l))} concluído</span></div></div>
         <button class="btn ${ls.completed ? 'gold' : ''}" id="doneBtn">${ls.completed ? '✓ Aula concluída' : 'Marcar aula como concluída'}</button>
@@ -177,9 +177,12 @@
         <h2 style="margin-top:0">O que é?</h2>${md(t.what)}
         <h2>Para que serve?</h2>${md(t.why)}
         <h2>A lógica por trás</h2>${md(t.logic)}
+        <div class="viz-slot"></div>
         <h2>Fórmulas fundamentais</h2>${t.formulas.map(ui.formula).join('')}
         <h2>Quando usar?</h2>${md(t.when)}
         <h2>Erros mais comuns</h2>${t.pitfalls.map(ui.pitfall).join('')}`;
+      const viz = ui.visual && ui.visual(l.id);
+      if (viz) box.querySelector('.viz-slot').replaceWith(viz); else box.querySelector('.viz-slot').remove();
     },
     identificacao(box, l) {
       const d = l.identify;
@@ -222,6 +225,15 @@
       box.innerHTML = `<p class="lead">${l.cards.length} cartões desta aula. Clique no cartão (ou espaço) para virar.</p>`;
       box.appendChild(ui.deck(ui.allCards(l.id), { filename: 'calculo1-' + l.id + '.csv' }));
     },
+  };
+
+  /* ================= Galeria de modelos animados ================= */
+  P.visuals = function (view) {
+    view.innerHTML = `<div class="wrap"><div class="crumb">Visual</div><h1>Modelos animados</h1>
+      <p class="lead">Um modelo por aula, na ordem de estudo. Deixe animar ou arraste o controle para explorar no seu ritmo. Cada modelo também aparece na aba Teoria da aula correspondente.</p>
+      <div id="vizList"></div></div>`;
+    const list = view.querySelector('#vizList');
+    CALC.order.forEach((id) => { const v = ui.visual(id); if (v) list.appendChild(v); });
   };
 
   /* ================= Resumos ================= */

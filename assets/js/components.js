@@ -106,6 +106,7 @@
     html += `<div class="nav-group">
       ${link('#/', '⌂ Painel')}
       ${link('#/cronograma', '▦ Cronograma')}
+      ${link('#/modelos', '◉ Modelos animados')}
       ${link('#/resumos', '▤ Resumos')}
       ${link('#/cartoes', '▣ Cartões Anki')}
       ${link('#/identificar', '◈ Identificar método')}

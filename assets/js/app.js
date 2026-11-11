@@ -18,6 +18,7 @@
         store.s.last = { route: '#/aula/' + a + '/' + (b || 'teoria'), at: Date.now() }; store.save();
         break;
       case 'resumos': P.summaries(view, a); break;
+      case 'modelos': P.visuals(view); break;
       case 'cartoes': P.cards(view, a); break;
       case 'cronograma': P.schedule(view); break;
       case 'identificar': P.identify(view); break;
@@ -28,7 +29,7 @@
     }
     ui.renderSidebar();
     ui.animateIn(view);
-    const titles = { aula: CALC.byId[a] ? CALC.byId[a].title : 'Aula', resumos: 'Resumos', cartoes: 'Cartões', cronograma: 'Cronograma', identificar: 'Identificar método', simulados: 'Simulados', config: 'Configurações', dev: 'Validação' };
+    const titles = { aula: CALC.byId[a] ? CALC.byId[a].title : 'Aula', resumos: 'Resumos', modelos: 'Modelos animados', cartoes: 'Cartões', cronograma: 'Cronograma', identificar: 'Identificar método', simulados: 'Simulados', config: 'Configurações', dev: 'Validação' };
     document.title = (page ? titles[page] + ' · ' : '') + 'Forja do Cálculo';
     window.scrollTo(0, 0);
   }
