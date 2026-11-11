@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forja do Cálculo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=VT323&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    try { var s = JSON.parse(localStorage.getItem('calc1:v1')); if (s && s.settings && s.settings.theme) document.documentElement.dataset.theme = s.settings.theme; } catch (e) {}
+  </script>
+</head>
+<body>
+  <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">☰</button>
+  <div class="scrim" id="scrim"></div>
+  <aside class="sidebar" id="sidebar" aria-label="Navegação"></aside>
+  <main class="main" id="view" tabindex="-1"></main>
+
+  <!-- núcleo -->
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/checker.js"></script>
+  <!-- conteúdo -->
+  <script src="content/course.js"></script>
+  <script src="content/lessons/l01-lhopital.js"></script>
+  <script src="content/lessons/l02-maximos-minimos.js"></script>
+  <script src="content/lessons/l03-otimizacao.js"></script>
+  <script src="content/lessons/l04-indefinidas.js"></script>
+  <script src="content/lessons/l05-definidas.js"></script>
+  <script src="content/lessons/l06-propriedades.js"></script>
+  <script src="content/lessons/l07-elementares.js"></script>
+  <script src="content/lessons/l08-pvi.js"></script>
+  <script src="content/lessons/l09-area.js"></script>
+  <script src="content/lessons/l10-substituicao.js"></script>
+  <script src="content/lessons/l11-partes.js"></script>
+  <script src="content/lessons/l12-fracoes-parciais.js"></script>
+  <script src="content/identify.js"></script>
+  <script src="content/exams.js"></script>
+  <script src="content/schedule.js"></script>
+  <!-- interface -->
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/pages.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
