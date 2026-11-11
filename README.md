@@ -1,5 +1,7 @@
 # Forja do Cálculo — Plataforma de estudos para a Prova 2 de Cálculo 1
 
+**Acesse online:** https://enzoberriel.github.io/forja-do-calculo/
+
 ## Como abrir
 
 - **Jeito mais simples:** dê dois cliques em `index.html`. Abre no navegador, sem instalar nada.
