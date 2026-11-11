@@ -88,6 +88,8 @@
     </div>`;
 
     ui.countUp(view);
+    const heroKnight = view.querySelector('.hero .sprite');
+    if (heroKnight) { heroKnight.setAttribute('title', 'Chamar o cavaleiro'); heroKnight.addEventListener('click', () => CALC.mascot && CALC.mascot.summon()); }
     view.querySelector('#examDate').addEventListener('change', (e) => {
       if (!e.target.value) return;
       st.settings.examDate = e.target.value; store.save(); P.dashboard(view); ui.renderSidebar();
@@ -162,7 +164,7 @@
     view.querySelector('#doneBtn').onclick = () => {
       ls.completed = !ls.completed; ls.completedAt = ls.completed ? Date.now() : null; store.save();
       P.lesson(view, id, sec); ui.renderSidebar(); ui.animateIn(view);
-      if (ls.completed) ui.toast('Aula concluída!', l.title + ' ⚔');
+      if (ls.completed && !(CALC.mascot && CALC.mascot.event('complete', { aula: l.title }))) ui.toast('Aula concluída!', l.title + ' ⚔');
     };
     const box = view.querySelector('#sec');
     const S = SECTION[sec];
@@ -214,7 +216,7 @@
       l.practice.forEach((it, k) => list.appendChild(ui.practice(it, CALC.practiceKey(l.id, it.id), 'Exercício ' + (k + 1), () => {
         const before = CALC.lessonState(l.id).completed;
         CALC.checkAutoComplete(l.id); store.save(); paintRep(); ui.renderSidebar();
-        if (!before && CALC.lessonState(l.id).completed) ui.toast('Aula concluída!', l.title + ' ⚔');
+        if (!before && CALC.lessonState(l.id).completed && !(CALC.mascot && CALC.mascot.event('complete', { aula: l.title }))) ui.toast('Aula concluída!', l.title + ' ⚔');
       })));
       paintRep();
     },
@@ -345,6 +347,10 @@
     view.innerHTML = `<div class="wrap"><div class="crumb">Ajustes</div><h1>Configurações</h1>
       <div class="card"><h3>Data da prova</h3><input type="date" id="d" value="${st.settings.examDate}" style="max-width:240px"><p class="small muted" style="margin-top:6px">O cronograma e a contagem regressiva se ajustam a esta data.</p></div>
       <div class="card"><h3>Tema</h3><div class="btn-row"><button class="btn" data-th="dark">◑ Forja (escuro)</button><button class="btn" data-th="light">◐ Pergaminho (claro)</button></div></div>
+      <div class="card"><h3>Cavaleiro mascote</h3>
+        <p class="small">Ele aparece de vez em quando com motivação, dicas da aula e piadas, e comemora seus acertos. Nunca aparece durante um simulado.</p>
+        <label class="task"><input type="checkbox" id="mascotOn" ${st.settings.mascot !== false ? 'checked' : ''}><span>Mostrar o cavaleiro</span></label>
+        <div class="btn-row"><button class="btn" id="mascotCall">⚔ Chamar agora</button><button class="btn" id="mascotJoke">Contar uma piada</button></div></div>
       <div class="card"><h3>Backup do progresso</h3>
         <p class="small">O progresso fica salvo neste navegador. Para levar para outro aparelho, exporte aqui e importe lá.</p>
         <div class="btn-row"><button class="btn primary" id="exp">⬇ Exportar progresso (.json)</button>
@@ -353,6 +359,9 @@
       <p class="small muted"><a href="#/dev">Verificação de conteúdo (validador)</a></p></div>`;
     view.querySelector('#d').onchange = (e) => { if (e.target.value) { st.settings.examDate = e.target.value; store.save(); } };
     view.querySelectorAll('[data-th]').forEach((b) => b.onclick = () => { document.documentElement.dataset.theme = b.dataset.th; st.settings.theme = b.dataset.th; store.save(); ui.renderSidebar(); });
+    view.querySelector('#mascotOn').onchange = (e) => CALC.mascot && CALC.mascot.setEnabled(e.target.checked);
+    view.querySelector('#mascotCall').onclick = () => CALC.mascot && CALC.mascot.summon();
+    view.querySelector('#mascotJoke').onclick = () => CALC.mascot && CALC.mascot.joke();
     view.querySelector('#exp').onclick = () => CALC.download('calculo1-progresso-' + CALC.iso(new Date()) + '.json', store.exportJSON(), 'application/json');
     view.querySelector('#imp').onchange = (e) => {
       const f = e.target.files[0]; if (!f) return;

@@ -444,3 +444,42 @@ body, .sidebar, .card, .main { transition: background-color .35s, color .35s, bo
 .viz-cap .p:last-child { margin-bottom: 0; }
 .viz-from { margin-top: 8px; }
 @media (max-width: 560px) { .viz { padding: 14px 10px; } .viz-ctrl { flex-wrap: wrap; } .viz-slider { order: 3; flex-basis: 100%; } }
+
+/* ---------- Mascote (cavaleiro) ---------- */
+@keyframes mascotIn { 0% { transform: translateY(115%); } 60% { transform: translateY(-9%); } 80% { transform: translateY(3%); } 100% { transform: translateY(0); } }
+@keyframes mascotOut { to { transform: translateY(120%); opacity: 0; } }
+@keyframes mascotIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3%); } }
+@keyframes mascotTalk { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-4%) rotate(-1.5deg); } }
+@keyframes mascotSwing { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-7deg); } 60% { transform: rotate(5deg); } }
+@keyframes mascotJump { 0%, 100% { transform: translateY(0) scale(1); } 15% { transform: translateY(2%) scale(1.05, .94); } 40% { transform: translateY(-22%) scale(.97, 1.04); } 65% { transform: translateY(0) scale(1.04, .95); } 80% { transform: translateY(-5%); } }
+@keyframes caret { 50% { opacity: 0; } }
+
+.mascot { position: fixed; z-index: 55; left: 306px; bottom: 0; display: flex; align-items: flex-end; flex-direction: row-reverse; justify-content: flex-end; gap: 0; pointer-events: none; max-width: calc(100vw - 320px); }
+.mascot[hidden] { display: none; }
+.mascot > * { pointer-events: auto; }
+.mascot.in { animation: mascotIn .62s cubic-bezier(.2, .8, .3, 1) both; }
+.mascot.out { animation: mascotOut .42s ease-in forwards; }
+.mascot-knight { background: none; border: 0; padding: 0; cursor: pointer; width: 150px; height: 150px; flex: none; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .45)); transition: transform .15s; }
+.mascot-knight:hover { transform: translateY(-4px); }
+.mascot-knight img { width: 100%; height: 100%; object-fit: contain; display: block; transform-origin: 50% 95%; image-rendering: pixelated;
+  animation: mascotIdle 1.9s steps(2, jump-none) infinite; }
+.mascot.talking .mascot-knight img { animation: mascotTalk .36s steps(2, jump-none) infinite; }
+.mascot-knight img.swing { animation: mascotSwing .6s ease-in-out; }
+.mascot-knight img.jump { animation: mascotJump .75s ease-out; }
+.mascot-bubble { position: relative; max-width: 330px; margin: 0 0 96px -14px; background: var(--surface); border: 2px solid var(--gold); box-shadow: var(--pixel-shadow); padding: 12px 14px 10px; }
+.mascot-bubble::after { content: ""; position: absolute; left: -12px; bottom: 16px; width: 0; height: 0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; border-right: 12px solid var(--gold); }
+.mascot-bubble.pop { animation: popIn .32s ease-out; }
+.mascot-text { margin: 0 18px 8px 0; font-size: .97rem; line-height: 1.45; min-height: 1.45em; }
+.mascot.talking .mascot-text::after { content: "▌"; color: var(--gold-text); animation: caret .6s steps(1) infinite; margin-left: 2px; }
+.mascot-x { position: absolute; top: 4px; right: 6px; background: none; border: 0; color: var(--muted); font-size: 1.3rem; line-height: 1; cursor: pointer; padding: 2px 4px; }
+.mascot-x:hover { color: var(--text); }
+.mascot-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.mascot-actions .btn { padding: 3px 9px; font-size: .8rem; }
+.hero .sprite { cursor: pointer; }
+@media (max-width: 900px) {
+  .mascot { left: 4px; max-width: calc(100vw - 8px); }
+  .mascot-knight { width: 104px; height: 104px; }
+  .mascot-bubble { max-width: calc(100vw - 112px); margin-bottom: 64px; padding: 10px 11px 8px; }
+  .mascot-text { font-size: .9rem; }
+}
+@media print { .mascot { display: none !important; } }

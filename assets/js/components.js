@@ -278,6 +278,7 @@
         ui.retrigger(node, 'fx-shake');
       }
       store.save(); paintStatus(); onChange && onChange();
+      if (CALC.mascot) CALC.mascot.event(r.status === 'correct' ? 'correct' : 'wrong');
     };
     if (revealBtn) revealBtn.onclick = () => { reveal(); revealBtn.disabled = true; };
     if (hintBtn) hintBtn.onclick = () => { q('.hint').hidden = false; hintBtn.hidden = true; };
