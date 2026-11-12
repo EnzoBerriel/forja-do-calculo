@@ -483,3 +483,19 @@ body, .sidebar, .card, .main { transition: background-color .35s, color .35s, bo
   .mascot-text { font-size: .9rem; }
 }
 @media print { .mascot { display: none !important; } }
+
+/* ---------- Cursor de espada + camada de efeitos de clique ---------- */
+html, html * {
+  cursor: url("../img/cursor-espada.png") 1 1, auto !important;
+  cursor: -webkit-image-set(url("../img/cursor-espada.png") 1x, url("../img/cursor-espada@2x.png") 2x) 1 1, auto !important;
+  cursor: image-set(url("../img/cursor-espada.png") 1x, url("../img/cursor-espada@2x.png") 2x) 1 1, auto !important;
+}
+html.golpe, html.golpe * {
+  cursor: url("../img/cursor-golpe.png") 0 9, auto !important;
+  cursor: -webkit-image-set(url("../img/cursor-golpe.png") 1x, url("../img/cursor-golpe@2x.png") 2x) 0 9, auto !important;
+  cursor: image-set(url("../img/cursor-golpe.png") 1x, url("../img/cursor-golpe@2x.png") 2x) 0 9, auto !important;
+}
+html textarea, html input[type=text], html input[type=date], html [contenteditable] { cursor: text !important; }
+html .btn:disabled, html button:disabled { cursor: not-allowed !important; }
+.fx-layer { position: fixed; inset: 0; z-index: 9999; pointer-events: none; }
+@media print { .fx-layer { display: none !important; } }
